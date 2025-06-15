@@ -1,34 +1,48 @@
-import Contact from "./Contact"
+/**
+ * Challenge: create a page that displays your favorite jokes
+ * - Create a Joke component in its own file.
+ * - Import and render 4-5 <Joke /> components
+ * - Each Joke should receive a "setup" prop and a "punchline" prop
+ *   and render those however you'd like
+ * - Use your favorite 2-part jokes (setup & punchline), or check
+ *   jokes.md file for some examples.
+ *
+ * EXTRA CREDIT:
+ * Some jokes are only a punchline with no setup:
+ *
+ * E.g.: "It’s hard to explain puns to kleptomaniacs because
+ * they always take things literally."
+ *
+ * If you don't pass in a "question" prop, how might you make it only
+ * show the punchline?
+ */
 
-function App() {
+import Joke from "./Joke";
+
+export default function App() {
     return (
-        <div className="contacts">
-            <Contact
-                img="./images/mr-whiskerson.png"
-                name="Mr. Whiskerson"
-                phone="(212) 555-1234"
-                email="mr.whiskaz@catnap.meow"
+        <main>
+            <Joke punchline="It’s hard to explain puns to kleptomaniacs because they always take things literally." />
+            <Joke
+                setup="I got my daughter a fridge for her birthday."
+                punchline="I can't wait to see her face light up when she opens it."
             />
-            <Contact
-                img="./images/fluffykins.png"
-                name="Fluffykins"
-                phone="(212) 555-2345"
-                email="fluff@me.com"
+            <Joke
+                setup="How did the hacker escape the police?"
+                punchline="He just ransomware!"
             />
-            <Contact
-                img="./images/felix.png"
-                name="Felix"
-                phone="(212) 555-4567"
-                email="thecat@hotmail.com"
+            <Joke
+                setup="Why don't pirates travel on mountain roads?"
+                punchline="Scurvy."
             />
-            <Contact 
-                img="./images/pumpkin.png"
-                name="Pumpkin"
-                phone="(0800) CAT KING"
-                email="pumpkin@scrimba.com"
+            <Joke
+                setup="Why do bees stay in the hive in the winter?"
+                punchline="Swarm."
             />
-        </div>
-    )
+            <Joke
+                setup="What's the best thing about Switzerland?"
+                punchline="I don't know, but the flag is a big plus!"
+            />
+        </main>
+    );
 }
-
-export default App
