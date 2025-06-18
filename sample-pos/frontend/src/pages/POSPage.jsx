@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MainLayout from "../layouts/MainLayout";
 import axios from "axios"
+import { toast } from 'react-toastify';
 
 function POSPage() {
 
@@ -8,6 +9,11 @@ function POSPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+
+  const toastOptions = {
+    autoClose: 400,
+    pauseOnHover: true,
+  }
 
   const fetchProducts = async () => {
     setIsLoading(true);
@@ -40,6 +46,7 @@ function POSPage() {
       });
 
       setCart(newCart);
+      toast(`Added ${newItem.name} to cart`, toastOptions)
 
     } else {
       let addingProduct = {
@@ -48,6 +55,7 @@ function POSPage() {
         'totalAmount': product.price,
       }
       setCart([...cart, addingProduct]);
+      toast(`Added ${product.name} to cart`, toastOptions)
     }
 
   }
