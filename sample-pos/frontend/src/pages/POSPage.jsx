@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import MainLayout from "../layouts/MainLayout";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { ComponentToPrint } from "../components/ComponentToPrint";
-import { useReactToPrint } from "react-to-print";
+import { ComponentToPrint } from "../components/ComponentToPrint"
+// import { useReactToPrint } from "react-to-print";
 
 function POSPage() {
   const [products, setProducts] = useState([]);
@@ -66,12 +66,49 @@ function POSPage() {
 
   const componentRef = useRef();
 
-  const handleReactToPrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
-
   const handlePrint = () => {
-    handleReactToPrint();
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Receipt</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            .total { font-weight: bold; margin-top: 20px; }
+          </style>
+        </head>
+        <body>
+          <h2>Receipt</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${cart.map(item => `
+                <tr>
+                  <td>${item.name}</td>
+                  <td>$${item.price}</td>
+                  <td>${item.quantity}</td>
+                  <td>$${item.totalAmount}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+          <div class="total">Total Amount: $${totalAmount}</div>
+          <div>Thank you for your purchase!</div>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.focus();
   };
 
   useEffect(() => {
@@ -116,13 +153,7 @@ function POSPage() {
           )}
         </div>
         <div className="col-lg-4">
-          <div style={{ display: "none" }}>
-            <ComponentToPrint
-              cart={cart}
-              totalAmount={totalAmount}
-              ref={componentRef}
-            />
-          </div>
+
           <div className="table-responsive bg-dark">
             <table className="table table-responsive table-dark table-hover">
               <thead>
