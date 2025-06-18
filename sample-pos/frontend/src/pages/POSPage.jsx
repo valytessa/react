@@ -7,6 +7,7 @@ function POSPage() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [cart, setCart] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0);
 
   const fetchProducts = async () => {
     setIsLoading(true);
@@ -51,9 +52,22 @@ function POSPage() {
 
   }
 
+  const removeProduct = async (product) => {
+    const newCart = cart.filter(cartItem => cartItem.id !== product.id);
+    setCart(newCart);
+  }
+
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    let newTotalAmount = 0;
+    cart.forEach(icart => {
+      newTotalAmount = newTotalAmount + parseInt(icart.totalAmount);
+    })
+    setTotalAmount(newTotalAmount);
+  }, [cart])
 
   return (
     <MainLayout>
@@ -92,13 +106,14 @@ function POSPage() {
                   <td>{cartProduct.quantity}</td>
                   <td>{cartProduct.totalAmount}</td>
                   <td>
-                    <button className="btn btn-danger btn-sm">Remove</button>
+                    <button className="btn btn-danger btn-sm" onClick={() => removeProduct(cartProduct)}>Remove</button>
                   </td>
                 </tr>)
 
                   : 'No Item in Cart'}
               </tbody>
             </table>
+            <h2 className="px-2 text-white">Total Amount: ${totalAmount}</h2>
           </div>
         </div>
       </div>
