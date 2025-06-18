@@ -1,11 +1,12 @@
-import React from 'react'
+import React from "react";
+import MainLayout from "../layouts/MainLayout";
 
 function POSPage() {
   return (
-    <div>
-        POSPage
-    </div>
-  )
+    <MainLayout>
+      POS Content
+    </MainLayout>
+  );
 }
 
-export default POSPage
+export default POSPage;
